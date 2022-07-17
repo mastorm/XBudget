@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XBudget.Server", "XBudget.Server\XBudget.Server.csproj", "{3BD44BCA-A23B-4F61-B9ED-72644BDD3A4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BD44BCA-A23B-4F61-B9ED-72644BDD3A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BD44BCA-A23B-4F61-B9ED-72644BDD3A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BD44BCA-A23B-4F61-B9ED-72644BDD3A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BD44BCA-A23B-4F61-B9ED-72644BDD3A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
