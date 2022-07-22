@@ -40,4 +40,13 @@ public class AuthenticationMutations
             _ => throw new LoginFailedException()
         };
     }
+
+    public Task<User> RegisterAsync(
+        [Service] IRegistrationService registrationService,
+        [EmailAddress] string email,
+        [MinLength(8)] string password
+        )
+    {
+        return registrationService.RegisterAsync(new RegistrationPayload(email, password));
+    }
 }
