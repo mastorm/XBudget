@@ -10,6 +10,7 @@ using XBudget.Server;
 using XBudget.Server.App.Users;
 using XBudget.Server.Configuration;
 using XBudget.Server.Data;
+using XBudget.Server.Infrastructure.GraphQL;
 using XBudget.Server.Services.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +24,9 @@ var services = builder.Services;
 services
     .AddGraphQLServer()
     .AddMutationType()
-    .AddQueryType<Query>()
+    .AddQueryType()
     .AddServerTypes()
+    .AddHttpRequestInterceptor<HttpRequestInterceptor>()
     .RegisterDbContext<XBudgetContext>(DbContextKind.Pooled)
     .AddMutationConventions();
 

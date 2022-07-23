@@ -10,16 +10,16 @@ namespace XBudget.Server.Services.Authentication;
 public class RegistrationService : IRegistrationService, IAsyncDisposable
 {
     private readonly XBudgetContext _context;
-    private readonly IPasswordHasher<User> _hasher;
+    private readonly IPasswordHasher<User?> _hasher;
 
-    public RegistrationService(IDbContextFactory<XBudgetContext> context, IPasswordHasher<User> hasher)
+    public RegistrationService(IDbContextFactory<XBudgetContext> context, IPasswordHasher<User?> hasher)
     {
         _context = context.CreateDbContext();
         _hasher = hasher;
     }
 
 
-    public async Task<User> RegisterAsync(RegistrationPayload payload)
+    public async Task<User?> RegisterAsync(RegistrationPayload payload)
     {
         await CheckEmailAvailabilityAsync(payload.Email);
 

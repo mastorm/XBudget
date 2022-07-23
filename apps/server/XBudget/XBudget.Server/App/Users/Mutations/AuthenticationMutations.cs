@@ -45,7 +45,7 @@ public class AuthenticationMutations
     }
 
     [Error<EmailNotAvailableException>]
-    public Task<User> RegisterAsync(
+    public Task<User?> RegisterAsync(
         [Service] IRegistrationService registrationService,
         [EmailAddress] string email,
         [MinLength(8)] string password
