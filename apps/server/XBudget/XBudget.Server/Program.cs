@@ -24,8 +24,8 @@ services
     .AddMutationType()
     .AddQueryType<Query>()
     .AddServerTypes()
-    .RegisterDbContext<XBudgetContext>(DbContextKind.Pooled);
-    // .AddMutationConventions();
+    .RegisterDbContext<XBudgetContext>(DbContextKind.Pooled)
+    .AddMutationConventions();
 
 services.AddDatabase(config.GetConnectionString("SQL"));
 services.AddHttpContextAccessor();

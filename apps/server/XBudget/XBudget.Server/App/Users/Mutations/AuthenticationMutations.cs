@@ -6,6 +6,7 @@ using XBudget.Server.App.Common.Exceptions;
 using XBudget.Server.App.Users.Exceptions;
 using XBudget.Server.Data;
 using XBudget.Server.Services.Authentication;
+using XBudget.Server.Services.Authentication.Exceptions;
 
 namespace XBudget.Server.App.Users.Mutations;
 
@@ -22,6 +23,7 @@ public class AuthenticationMutations
     }
 
     [Error<NotFoundException>]
+    [Error<LoginFailedException>]
     public async Task<User?> SignInAsync(
         [ScopedService] XBudgetContext context,
         [EmailAddress] string email,
@@ -42,6 +44,7 @@ public class AuthenticationMutations
         };
     }
 
+    [Error<EmailNotAvailableException>]
     public Task<User> RegisterAsync(
         [Service] IRegistrationService registrationService,
         [EmailAddress] string email,
