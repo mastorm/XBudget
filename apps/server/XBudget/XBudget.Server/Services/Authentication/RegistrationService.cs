@@ -34,7 +34,7 @@ public class RegistrationService : IRegistrationService, IAsyncDisposable
 
     private async Task CheckEmailAvailabilityAsync(string email)
     {
-        if (!await _context.Users.AnyAsync(user => user.Email == email))
+        if (await _context.Users.AnyAsync(user => user.Email == email))
         {
             throw new EmailNotAvailableException();
         }
