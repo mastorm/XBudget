@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using XBudget.Server.App.Common.Exceptions;
 using XBudget.Server.App.Users.Exceptions;
@@ -20,19 +21,19 @@ public class AuthenticationMutations
         _session = session;
     }
 
-    [Error<NotFoundException<User>>]
+    [Error<NotFoundException>]
     public async Task<User?> SignInAsync(
-        XBudgetContext context,
+        [ScopedService] XBudgetContext context,
         [EmailAddress] string email,
         string password)
     {
         var user = await context.Users.FirstOrDefaultAsync(user => user.Email == email);
-
+    
         if (user is null)
         {
-            throw new NotFoundException<User>();
+            throw new NotFoundException(nameof(User));
         }
-
+    
         var signInResult = await _session.StartSessionAsync(user, password);
         return signInResult switch
         {

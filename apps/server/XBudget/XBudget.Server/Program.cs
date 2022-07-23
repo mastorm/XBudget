@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using XBudget.Server;
 using XBudget.Server.App.Users;
+using XBudget.Server.Configuration;
 using XBudget.Server.Data;
 using XBudget.Server.Services.Authentication;
 
@@ -19,12 +21,13 @@ var services = builder.Services;
 
 services
     .AddGraphQLServer()
-    .AddServerTypes()
-    .AddQueryType<Query>()
     .AddMutationType()
-    .RegisterDbContext<XBudgetContext>(DbContextKind.Pooled)
-    
-    .AddMutationConventions();
+    .AddQueryType<Query>()
+    .AddServerTypes()
+    .RegisterDbContext<XBudgetContext>(DbContextKind.Pooled);
+    // .AddMutationConventions();
+
+services.AddDatabase(config.GetConnectionString("SQL"));
 
 services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 services.AddScoped<ISession, Session>();
@@ -38,7 +41,3 @@ app.MapGraphQL();
 
 app.Run();
 
-class Query
-{
-    public string Placeholder() => "remove later";
-}

@@ -25,6 +25,7 @@ public class User : Entity
         PasswordHash = null!;
     }
 
+    [GraphQLIgnore]
     public ClaimsIdentity Identity() => new(
         new Claim[]
         {
