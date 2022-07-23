@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using XBudget.Server.App.Users;
 using XBudget.Server.Data;
@@ -6,14 +7,14 @@ using XBudget.Server.Services.Authentication.Exceptions;
 
 namespace XBudget.Server.Services.Authentication;
 
-public class RegistrationService : IRegistrationService
+public class RegistrationService : IRegistrationService, IAsyncDisposable
 {
     private readonly XBudgetContext _context;
     private readonly IPasswordHasher<User> _hasher;
 
-    public RegistrationService(XBudgetContext context, IPasswordHasher<User> hasher)
+    public RegistrationService(IDbContextFactory<XBudgetContext> context, IPasswordHasher<User> hasher)
     {
-        _context = context;
+        _context = context.CreateDbContext();
         _hasher = hasher;
     }
 
@@ -37,5 +38,10 @@ public class RegistrationService : IRegistrationService
         {
             throw new EmailNotAvailableException();
         }
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        return _context.DisposeAsync();
     }
 }

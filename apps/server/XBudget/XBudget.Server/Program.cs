@@ -28,12 +28,14 @@ services
     // .AddMutationConventions();
 
 services.AddDatabase(config.GetConnectionString("SQL"));
-
-services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-services.AddScoped<ISession, Session>();
-services.AddScoped<IRegistrationService, RegistrationService>();
+services.AddHttpContextAccessor();
+services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
+services.AddTransient<ISession, Session>();
+services.AddTransient<IRegistrationService, RegistrationService>();
 
 var app = builder.Build();
+
+await app.UseAutoMigration<XBudgetContext>();
 
 app.UseRouting();
 
