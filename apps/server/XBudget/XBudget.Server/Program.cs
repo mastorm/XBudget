@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Data;
 using HotChocolate.Execution;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,11 @@ services
     .RegisterDbContext<XBudgetContext>(DbContextKind.Pooled)
     .AddMutationConventions();
 
+services.AddAuthorization();
+services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
+
 services.AddDatabase(config.GetConnectionString("SQL"));
 services.AddHttpContextAccessor();
 services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -37,9 +43,8 @@ var app = builder.Build();
 
 await app.UseAutoMigration<XBudgetContext>();
 
-app.UseRouting();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapGraphQL();
-
 app.Run();
 

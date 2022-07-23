@@ -26,11 +26,12 @@ public class User : Entity
     }
 
     [GraphQLIgnore]
-    public ClaimsIdentity Identity() => new(
+    public ClaimsIdentity Identity(string scheme) => new(
         new Claim[]
         {
             new(ClaimTypes.NameIdentifier, Id.ToString())
 
-        });
+        },
+        scheme);
 
 }

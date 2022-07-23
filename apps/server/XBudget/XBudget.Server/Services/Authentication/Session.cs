@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -42,8 +43,11 @@ public class Session : ISession
             return SignInResult.Failed();
         }
         
-        var principal = new ClaimsPrincipal(user.Identity());
-        await _context.SignInAsync(principal);
+        var principal = new ClaimsPrincipal(user.Identity(CookieAuthenticationDefaults.AuthenticationScheme));
+        await _context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties()
+        {
+            IsPersistent = true
+        });
         
         return SignInResult.Success(user);
     }

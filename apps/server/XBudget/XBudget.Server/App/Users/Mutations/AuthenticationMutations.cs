@@ -25,7 +25,7 @@ public class AuthenticationMutations
     [Error<NotFoundException>]
     [Error<LoginFailedException>]
     public async Task<User?> SignInAsync(
-        [ScopedService] XBudgetContext context,
+        XBudgetContext context,
         [EmailAddress] string email,
         string password)
     {
